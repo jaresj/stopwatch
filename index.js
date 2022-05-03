@@ -1,86 +1,92 @@
-// DOG
+function Stopwatch() {
+  let startTime,
+    endTime,
+    running,
+    duration = 0;
 
-class Dog {
-  constructor(name, species, size) {
-    this.name = name;
-    this.species = species;
-    this.size = size;
-  }
-  // Bark based on size
-  bark() {
-    if (this.size > 60) {
-      return 'Grrr! Grrr!';
-    } else {
-      return 'Woof! Woof';
-    }
-  }
+  this.start = function () {
+    if (running) throw new Error('Stopwatch has already started');
+
+    running = true;
+    startTime = new Date();
+  };
+
+  this.stop = function () {
+    if (!running) throw new Error('Stopwatch has already ended');
+
+    running = false;
+    endTime = new Date();
+
+    const sections = (endTime.getTime() - startTime.getTime()) / 1000;
+    duration += seconds;
+  };
+
+  this.reset = function () {
+    startTime = null;
+    endTime = null;
+    running = false;
+    duration = 0;
+  };
+
+  Object.defineProperty(this, 'duration', {
+    get: function () {
+      return duration;
+    },
+  });
 }
 
-const fang = new Dog('Fang', 'boarhound', 75);
-console.log(`${fang.name} is a ${fang.species} dog measuring ${fang.size}`);
-console.log(`Look, a cat! ${fang.name} barks: ${fang.bark()}`);
+// Constructor Function
+// function Circle(radius) {
+//   this.radius = radius;
 
-const snowy = new Dog('Snowy', 'terrier', 22);
-console.log(`${snowy.name} is a ${snowy.species} dog measuring ${snowy.size}`);
-console.log(`Look, a cat! ${snowy.name} barks: ${snowy.bark()}`);
+//   let defaultLocation = { x: 0, y: 0 };
 
-// RPG
+//   this.getDefaultLocation = function () {
+//     return defaultLocation;
+//   };
 
-class Character {
-  constructor(name, health, strength) {
-    this.name = name;
-    this.health = health;
-    this.strength = strength;
-    this.xp = 0;
-    this.gold = 10;
-    this.keys = 1;
-  }
-  // Attack a target
-  attack(target) {
-    if (this.health > 0) {
-      const damage = this.strength;
-      console.log(
-        `${this.name} attacks ${target.name} andd causes ${damage} damage points`
-      );
-      target.health -= damage;
-      if (target.health > 0) {
-        console.log(`${target.name} has ${target.health} health points left`);
-      } else {
-        target.health = 0;
-        const bonusXP = 10;
-        const bonusGold = 10;
-        const bonusKey = 1;
-        console.log(
-          `${this.name} eliminated ${target.name} and wins ${bonusXP} experience points, ${bonusGold} gold and ${bonusKey} key(s)`
-        );
-        this.xp += bonusXP;
-        this.gold += bonusGold;
-        this.keys += bonusKey;
-      }
-    } else {
-      console.log(`${this.name} can't attack (they've been eliminated)`);
-    }
-  }
-  // Return the character description
-  describe() {
-    return `${this.name} has ${this.health} health points, ${this.strength} as strength, ${this.xp} XP points, ${this.gold} gold and ${this.keys} key(s)`;
-  }
-}
+//   this.draw = function () {
+//     // defaultLocation
+//     // this.radius
+//     console.log('draw');
+//   };
 
-const aurora = new Character('Aurora', 150, 25);
-const glacius = new Character('Glacius', 130, 30);
+//   Object.defineProperty(this, 'defaultLocation', {
+//     get: function () {
+//       return defaultLocation;
+//     },
+//     set: function (value) {
+//       if (!value.x || !value.y) throw new Error('Invalid Location');
 
-console.log('Welcome to the adventure! Here are our heroes:');
-console.log(aurora.describe());
-console.log(glacius.describe());
+//       defaultLocation = value;
+//     },
+//   });
+// }
 
-const monster = new Character('Spike', 40, 20);
-console.log("A wild monster has appeared: it's named " + monster.name);
+// const circle = new Circle(10);
+// circle.defaultLocation = 1;
+// circle.draw();
 
-monster.attack(aurora);
-monster.attack(glacius);
-aurora.attack(monster);
-glacius.attack(monster);
+// for (let key in circle) {
+//   if (typeof circle[key] !== 'function') console.log(key, circle[key]);
+// }
 
-console.log(aurora.describe());
-console.log(glacius.describe());
+// const keys = Object.keys(circle);
+// console.log(keys);
+
+// if ('radius' in circle) console.log('Circle has a radius');
+
+// circle.location = { x: 1 };
+// const propertyName = 'center location';
+// circle[propertyName] = { x: 1 };
+
+// delete circle.location;
+
+// let obj = { value: 10 };
+
+// function increase(obj) {
+//   obj.value++;
+// }
+
+// increase(obj);
+// console.log(obj);
